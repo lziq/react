@@ -30,7 +30,7 @@ React portal allows users to retrieve a html element globally and create react c
 
 6. What is react ref? 
 
-React ref can be used to manipulate states in react components. With the code in [link text](./username-age-validation/src/components/NewUser.js), we can use `useRef` to rewrite it: 
+React ref can be used to manipulate states in react components. With the code in [NewUser.js](./username-age-validation/src/components/NewUser.js), we can use `useRef` to rewrite it: 
 
 ```
 export function NewUser (props){
