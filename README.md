@@ -30,58 +30,8 @@ React portal allows users to retrieve a html element globally and create react c
 
 6. What is react ref? 
 
-React ref can be used to manipulate states in react components. e.g. 
-```
-export function NewUser (props){
-    const [username, setUsername] = useState(''); 
-    const [age, setAge] = useState(''); 
-    const [validInput, setValidInput] = useState(true); 
-    const [errorMessage, setErrorMessage] = useState(''); 
+React ref can be used to manipulate states in react components. With the code in [link text](./username-age-validation/src/components/NewUser.js), we can use `useRef` to rewrite it: 
 
-    const usernameHandler = event => {
-        setUsername(event.target.value); 
-    }; 
-    const ageHandler = event => {
-        setAge(event.target.value); 
-    }; 
-    const submitHandler = event => {
-        event.preventDefault();
-        if (username.trim().length === 0 || age.trim().length === 0){
-            setErrorMessage('username and age must not be empty'); 
-            setValidInput(false); 
-            return; 
-        }
-        if (+age < 1){
-            setErrorMessage('age must be a positive integer'); 
-            setValidInput(false); 
-            return; 
-        }
-
-        props.addUserHandler({'id': Math.random(), 'username': username, 'age': age});  
-        setUsername(''); 
-        setAge(''); 
-    }; 
-    const errorHandler = event => {
-        setValidInput(true); 
-    }; 
-
-    return (
-        <>
-            {!validInput && <ErrorModal title="Invalid input" message={errorMessage} errorHandler={errorHandler}></ErrorModal>}
-            <Card className={classes.input}>
-                <form onSubmit={submitHandler}>
-                    <label htmlFor="username">Username: </label>
-                    <input id="username" type="text" value={username} onChange={usernameHandler}></input>
-                    <label htmlFor="age">Age(Years): </label>
-                    <input id="age" type="text" value={age} onChange={ageHandler}></input>
-                    <Button type="submit">Add user</Button>
-                </form>
-            </Card>
-        </>
-    ); 
-}
-```
-With `useRef`, it becomes: 
 ```
 export function NewUser (props){
     const username = useRef(); 
