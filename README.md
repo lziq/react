@@ -85,4 +85,75 @@ export function NewUser (props){
 
 "Uncontrolled" means the html element update is maintained by users, instead of React, such as the line `username.current.value = '';` in the above example. 
 
+8. How is `useEffect` useful? 
 
+We can use `useEffect` to wrap a block of code in, so it only executes once when browser loads the web page. e.g. 
+```
+const storedUserLoggoedInInformation = localStorage.getItem('isLoggedIn'); 
+
+useEffect(() => {
+    const storedUserLoggoedInInformation = localStorage.getItem('isLoggedIn); 
+    if (storedUserLoggedInInformation === '1'){
+        setIsLoggedIn(true); 
+    }
+}, [])
+```
+`useEffect` can also be used to change a state based on other state changes. e.g. 
+```
+const identifier = setTimeout(() => {
+    setFormIsValid(
+        enteredEmail.includes('@') &&enteredPassword.trim().length > 6 
+    ); 
+}, 500); 
+
+return () => {
+    clearTimeout(identifier); 
+}; 
+```
+So we don't need to add the logic of `setFormIsValid` in component of email and password input box. 
+
+9. What is `useReducer`? 
+
+`useReducer` is useful when it comes to change a state according to multiple actions (object as state). e.g. 
+```
+import React, { useReducer } from 'react';
+
+function counterReducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return state + 1;
+    case 'decrement':
+      return state - 1;
+    default:
+      throw new Error('Unsupported action type');
+  }
+}
+
+function Counter() {
+  const [count, dispatch] = useReducer(counterReducer, 0);
+
+  function handleIncrement() {
+    dispatch({ type: 'increment' });
+  }
+
+  function handleDecrement() {
+    dispatch({ type: 'decrement' });
+  }
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={handleIncrement}>Increment</button>
+      <button onClick={handleDecrement}>Decrement</button>
+    </div>
+  );
+}
+```
+
+10. What is a React context? 
+
+A React context is used to pass data between 2 components directly, whereas `useState` needs to come through all the components to pass data. To use a React component: 
+- First, define a context component using `React.createContext` 
+- Second, define a `<Context.Provider>` in the data sender component. 
+- Finally, use `useContext` to receive data in the data receiver component. 
+Note that React context is not optimized in high frequency changes. (we should use Redux in this case)
