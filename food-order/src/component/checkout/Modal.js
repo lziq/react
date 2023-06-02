@@ -15,12 +15,7 @@ const Modal = (props) => {
             {ReactDOM.createPortal(<Backdrop cancelCheckout={props.cancelCheckout}></Backdrop>, portalElement)}
             {ReactDOM.createPortal(
                 <Card className={styles.modal}>
-                    <Cart
-                        cancelCheckout={props.cancelCheckout}
-                        addOneMeal={props.addOneMeal}
-                        removeOneMeal={props.removeOneMeal}
-                        meals={props.meals}
-                    />
+                    <Cart cancelCheckout={props.cancelCheckout}/>
                 </Card>,
                 portalElement
             )}

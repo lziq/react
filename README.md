@@ -98,7 +98,7 @@ useEffect(() => {
     }
 }, [])
 ```
-`useEffect` can also be used to change a state based on other state changes. e.g. 
+`useEffect` can also be used to perform side effects (set timer, send http requests, etc.) based on other state changes. (Not limited to side effects) e.g. 
 ```
 const identifier = setTimeout(() => {
     setFormIsValid(
@@ -110,7 +110,6 @@ return () => {
     clearTimeout(identifier); 
 }; 
 ```
-So we don't need to add the logic of `setFormIsValid` in component of email and password input box. 
 
 9. What is `useReducer`? 
 
@@ -152,8 +151,25 @@ function Counter() {
 
 10. What is a React context? 
 
-A React context is used to pass data between 2 components directly, whereas `useState` needs to come through all the components to pass data. To use a React component: 
+A React context is used to pass data between 2 components directly, whereas `useState` needs to come through all the components to pass data using props. To use a React component: 
 - First, define a context component using `React.createContext` 
 - Second, define a `<Context.Provider>` in the data sender component. 
 - Finally, use `useContext` to receive data in the data receiver component. 
 Note that React context is not optimized in high frequency changes. (we should use Redux in this case)
+
+11. How React re-renders a component? 
+
+Once React detects a state change in a component, it re-executes the component function block, and generates the new virtual DOM. Then, it compares the new virtual DOM with the old one, and decide if updates need to be done on the actual DOM. When re-rendering a component, it also re-render all of its descendant components as well. 
+
+12. What is `React.memo()`? 
+
+`React.memo()` can be used to wrap a React a component so it gets checked whenever it's about to be re-rendered due to re-rendering of its parents. If the passed props is not changed, its re-rendering will be cancelled. It is generally not a good idea to wrap all the components with `React.memo()`, since the comparison itself is an additional cost. 
+
+13. What is `useCallback()`? How it is different from `useEffect()`? 
+
+`useCallback()` is used to pass a function to child components. It ensures React does not create a new function when re-rending the component, and makes sure the original function is passed to its child component. It is used only when child components are wrapped with `React.memo`. In `useCallback()`, the funciton definition is re-generated, while in `useEffect`, the function is called again, when the dependency state changes. 
+
+14. What is `useMemo()`? 
+
+`useMemo()` is similar to `useCallback()`. Instead of caching a function, it is used to cache a state. It can be used similar to the use case described in above question. Also, it can be used to cache the result of some computation-intensive tasks, such as sorting a list, so the task won't get executed again once the component gets re-rendered. 
+

@@ -5,7 +5,7 @@ const Meals = (props) => {
     return (
         <>
             <MealsSummary />
-            <AvailableMeals meals={props.meals} addMeals={props.addMeals} />
+            <AvailableMeals />
         </>
     ); 
 }
